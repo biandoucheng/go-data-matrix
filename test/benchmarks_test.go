@@ -4,8 +4,9 @@ package test
 
 import (
 	"fmt"
-	"go-data-matrix/model"
 	"strconv"
+
+	"github.com/biandoucheng/go-data-matrix/model"
 )
 
 var (

@@ -1,3 +1,3 @@
-module go-data-matrix
+module github.com/biandoucheng/go-data-matrix
 
 go 1.17

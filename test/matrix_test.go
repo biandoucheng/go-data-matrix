@@ -2,7 +2,8 @@ package test
 
 import (
 	"fmt"
-	"go-data-matrix/model"
+
+	"github.com/biandoucheng/go-data-matrix/model"
 )
 
 // 测试类别
