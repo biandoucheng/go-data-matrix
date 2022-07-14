@@ -3,7 +3,7 @@ package test
 import (
 	"fmt"
 
-	"github.com/biandoucheng/go-data-matrix/model"
+	godatamatrix "github.com/biandoucheng/go-data-matrix"
 )
 
 // 测试类别
@@ -15,7 +15,7 @@ func InitMatrix() {
 	ids := GetDataIds()
 	name := "蝴蝶品种统计"
 
-	mtx := model.DataMatrix{}
+	mtx := godatamatrix.DataMatrix{}
 	mtx.Init(name, ids)
 
 	s := mtx.String()
@@ -31,7 +31,7 @@ func SetPointIndex() {
 	name := "蝴蝶品种统计"
 
 	// 初始化数据矩阵
-	mtx := model.DataMatrix{}
+	mtx := godatamatrix.DataMatrix{}
 	mtx.Init(name, ids)
 
 	// 开启一个数据点

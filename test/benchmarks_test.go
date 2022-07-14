@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/biandoucheng/go-data-matrix/model"
+	godatamatrix "github.com/biandoucheng/go-data-matrix"
 )
 
 var (
-	ButterflyMatrix model.DataMatrix    = model.DataMatrix{}
-	ButterflyData   map[int64]Butterfly = map[int64]Butterfly{}
+	ButterflyMatrix godatamatrix.DataMatrix = godatamatrix.DataMatrix{}
+	ButterflyData   map[int64]Butterfly     = map[int64]Butterfly{}
 )
 
 // GenerateDataSource 生产数据源
