@@ -611,8 +611,8 @@ func (d *DataMatrix) String() string {
 	moves_s := strings.Join(moves, "\r\n")
 
 	matrixs := []string{}
-	for idx, points := range d.index {
-		s := fmt.Sprintf("	Index: %d / Position: %v", idx, points)
+	for idx, points := range d.matrix {
+		s := fmt.Sprintf("	Index: %d / BitMap: %v", idx, points)
 		matrixs = append(matrixs, s)
 	}
 	matrixs_s := strings.Join(matrixs, "\r\n")
