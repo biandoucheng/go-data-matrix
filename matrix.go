@@ -29,9 +29,8 @@ type DataMatrix struct {
 	index       map[int64][2]int // 数据ID => 数据点阵坐标
 	indexNumber uint64           // 最大点阵索引
 
-	mtxChan chan int            // 数据点阵操作通道,解决并发处理问题
-	matrix  map[uint64][]uint64 // 数据索引 => 数据点阵
-	remove  map[int64][2]int    // 被删除的数据点
+	matrix map[uint64][]uint64 // 数据索引 => 数据点阵
+	remove map[int64][2]int    // 被删除的数据点
 
 	HandleFunc func(interface{}) error // 自定义方法
 
@@ -104,6 +103,11 @@ func (d *DataMatrix) GetName() string {
 	return d.name
 }
 
+// CreateTime 获取创建时间
+func (d *DataMatrix) CreateTime() time.Time {
+	return d.createTime
+}
+
 // GetIndex 获取一个新的点阵索引
 func (d *DataMatrix) GetIndex() uint64 {
 	defer d.Unlock()
@@ -117,14 +121,18 @@ func (d *DataMatrix) GetIndex() uint64 {
 	return d.indexNumber
 }
 
+// RemoveIndex 移除索引
+func (d *DataMatrix) RemoveIndex(idx uint64) {
+	d.Lock()
+
+	delete(d.matrix, idx)
+
+	d.Unlock()
+}
+
 // CurrentIndex 获取当前最大索引值
 func (d *DataMatrix) CurrentIndexNum() uint64 {
 	return d.indexNumber
-}
-
-// CreateTime 获取创建时间
-func (d *DataMatrix) CreateTime() time.Time {
-	return d.createTime
 }
 
 // LightUpPoint 点亮数据点阵单元
