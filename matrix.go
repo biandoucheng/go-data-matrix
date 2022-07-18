@@ -128,7 +128,7 @@ func (d *DataMatrix) CreateTime() time.Time {
 }
 
 // LightUpPoint 点亮数据点阵单元
-func (d *DataMatrix) LightUpPoint(id int64, idx uint64) {
+func (d *DataMatrix) LightUpPoint(id int64, idx uint64) uint64 {
 	defer d.Unlock()
 	d.Lock()
 
@@ -150,7 +150,7 @@ func (d *DataMatrix) LightUpPoint(id int64, idx uint64) {
 	// 点亮对应位置的数据位
 	coord, ex := d.index[id]
 	if !ex {
-		return
+		return idx
 	}
 
 	factor := uint64(1) << (coord[1] - 1)
@@ -159,6 +159,8 @@ func (d *DataMatrix) LightUpPoint(id int64, idx uint64) {
 	if !has {
 		d.matrix[idx] = points
 	}
+
+	return idx
 }
 
 // lightUpPoint 点亮数据点阵单元 内部使用
