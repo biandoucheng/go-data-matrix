@@ -140,7 +140,7 @@ func (d *DataMatrix) GetMatrixMp() map[uint64][]uint64 {
 
 	idxmp := map[uint64][]uint64{}
 
-	for idx, points := range idxmp {
+	for idx, points := range d.matrix {
 		tmp := append([]uint64{}, points...)
 		idxmp[idx] = tmp
 	}
