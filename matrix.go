@@ -130,6 +130,17 @@ func (d *DataMatrix) RemoveIndex(idx uint64) {
 	d.Unlock()
 }
 
+// RemoveIndex 移除索引
+func (d *DataMatrix) RemoveIndexs(idxs []uint64) {
+	d.Lock()
+
+	for _, idx := range idxs {
+		delete(d.matrix, idx)
+	}
+
+	d.Unlock()
+}
+
 // CurrentIndex 获取当前最大索引值
 func (d *DataMatrix) CurrentIndexNum() uint64 {
 	return d.indexNumber
