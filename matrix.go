@@ -32,7 +32,7 @@ type DataMatrix struct {
 	matrix map[uint64][]uint64 // 数据索引 => 数据点阵
 	remove map[int64][2]int    // 被删除的数据点
 
-	HandleFunc func(interface{}) error // 自定义方法
+	HandleFunc func(interface{}) (interface{}, error) // 自定义方法
 
 	createTime time.Time // 创建时间
 	startMs    int64     // 开始检测时间,microseconds
@@ -568,7 +568,7 @@ func (d *DataMatrix) GetIds(points []uint64) []int64 {
 }
 
 // Handler 自定义方法
-func (d *DataMatrix) Handler(in interface{}) error {
+func (d *DataMatrix) Handler(in interface{}) (interface{}, error) {
 	return d.HandleFunc(in)
 }
 
