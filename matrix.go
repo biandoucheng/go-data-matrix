@@ -404,16 +404,62 @@ func (d *DataMatrix) AddPoint(id int64) {
 }
 
 // GetPoint 获取点阵
-func (d *DataMatrix) GetPoint(idx uint64) []uint64 {
+func (d *DataMatrix) GetPoint(idx uint64) ([]uint64, bool) {
 	defer d.RUnlock()
 	d.RLock()
 
 	points, has := d.matrix[idx]
 	if has {
-		return points
+		return points, true
 	}
 
-	return d.defPoint
+	return d.defPoint, false
+}
+
+// BitAndOperate 与运算
+func (d *DataMatrix) BitAndOperate(idx1 []uint64, idx2 []uint64) ([]uint64, bool) {
+	flg := false
+
+	l1 := len(idx1)
+	l2 := len(idx2)
+	if l1 > l2 {
+		l1 = l2
+	}
+
+	if l1 == 0 {
+		return []uint64{}, false
+	}
+
+	res := make([]uint64, l1)
+	for i := 0; i < l1; i++ {
+		res[i] = idx1[i] & idx2[i]
+		flg = flg || (res[i] > 0)
+	}
+
+	return res, flg
+}
+
+// BitOrOperate 或运算
+func (d *DataMatrix) BitOrOperate(idx1 []uint64, idx2 []uint64) ([]uint64, bool) {
+	flg := false
+
+	l1 := len(idx1)
+	l2 := len(idx2)
+	if l1 > l2 {
+		l1 = l2
+	}
+
+	if l1 == 0 {
+		return []uint64{}, false
+	}
+
+	res := make([]uint64, l1)
+	for i := 0; i < l1; i++ {
+		res[i] = idx1[i] | idx2[i]
+		flg = flg || (res[i] > 0)
+	}
+
+	return res, flg
 }
 
 // GetAndPoint 与运算集合
