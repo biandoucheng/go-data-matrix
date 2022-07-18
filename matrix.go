@@ -32,8 +32,6 @@ type DataMatrix struct {
 	matrix map[uint64][]uint64 // 数据索引 => 数据点阵
 	remove map[int64][2]int    // 被删除的数据点
 
-	HandleFunc func(interface{}) (interface{}, error) // 自定义方法
-
 	createTime time.Time // 创建时间
 	startMs    int64     // 开始检测时间,microseconds
 	endMs      int64     // 结束检测时间,microseconds
@@ -119,6 +117,35 @@ func (d *DataMatrix) GetIndex() uint64 {
 
 	d.indexNumber += 1
 	return d.indexNumber
+}
+
+// GetIndexMap 获取数据ID索引MAP
+func (d *DataMatrix) GetIndexMap() map[int64][2]int {
+	defer d.RUnlock()
+	d.RLock()
+
+	idxmp := map[int64][2]int{}
+	for id, coord := range d.index {
+		tmp := [2]int{coord[0], coord[1]}
+		idxmp[id] = tmp
+	}
+
+	return idxmp
+}
+
+// GetMatrixMp 获取数据点阵
+func (d *DataMatrix) GetMatrixMp() map[uint64][]uint64 {
+	defer d.RUnlock()
+	d.RLock()
+
+	idxmp := map[uint64][]uint64{}
+
+	for idx, points := range idxmp {
+		tmp := append([]uint64{}, points...)
+		idxmp[idx] = tmp
+	}
+
+	return idxmp
 }
 
 // RemoveIndex 移除索引
@@ -565,11 +592,6 @@ func (d *DataMatrix) GetIds(points []uint64) []int64 {
 	}
 
 	return ids
-}
-
-// Handler 自定义方法
-func (d *DataMatrix) Handler(in interface{}) (interface{}, error) {
-	return d.HandleFunc(in)
 }
 
 // String 输出打印信息
